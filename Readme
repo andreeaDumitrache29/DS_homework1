@@ -1,0 +1,57 @@
+Dumitrache Daniela Andreea - 311CB
+
+	FunctiiLDI.c -> fisierul cu functii pentru listele dublu inlantuite circulare generice
+
+* InsL -> functia de inserare ordonata in lista.
+Declar o noua variabila aux de tipul TLDI, care reprezinta celula ce urmeaza a fi insearata.Aloc memorie pentru celula si pentru informatie si copiez informatia in campul corespunzator. Verific apoi daca lista este vida, iar daca da, inserez aux pe prima pozitie. Daca lista e nevida, caut primul element pentru care functia de comparare returneaza o valoare <0, element inaintea caruia inserez prin refacere de legaturi *cred ca asta a fost partea la care am stat cel mai mult la debug la aceasta tema*. Mai verfic daca trebuie sa schimb sau nu inceputul de lista in cazul in care inserez inaintea primului element.
+
+* DistrugeCel -> functie de eliminare celula cu o anumita informatie din lista
+Parcurg lista pana gasesc celula cu informatia cautata. Daca aceasta exista o copiez intr-un auxiliar, refac legaturile pentru a o elimina din lista si elibeez spatiul ocupat de auxiliar.
+
+*DistrugeL -> functie care distruge toata lista
+Parcurg lista cat timp este nevida. Daca aceasta are un singur element, atunci il elimin direct pe acesta. Altfel elimin fiecare celula pe rand, prin acelasi procedeu ca in functia de DistrugeCel.
+
+* LungimeL -> intoarce lungimea listei
+Daca lista este vida, intoarce 0. Daca are un singur element intoarce 1. Atfel parcurg toata lista incepand cu a doua celula si incrementez un contor, pe care il returnez la sfarsit.
+
+*AfisareL -> afiseaza informatia din celulele listei
+Daca lista e vida, afisez mesajul corespunzator; altfel parcurg panala final lista si folossc o functie de afisare specifica elementului pe care il am pentru a afisa informatia din fiecare celula.
+
+	functiith.c -> fisier cu functii pentru tabela hash
+*am declarat in prealabil in biblioteca "hash-table.h" tipul structurii TEntry pe care o folosesc in aceste functii*
+
+* hash_function -> calculez intrarea in tabela hash conform enuntului
+
+* cmp -> functia folosita pentru a ordona elementele in lista. Realizeaza diferenta dintre frecventele a doua elemente, iar daca acestea sunt egale, le compara alfabetic.
+
+* AfiElemFile -> functia afiseaza in fisierul dat ca parametru campul valoare dintr-o structura de tip TEntry, cu spatiu intre elemente.
+
+* AfiElemFile_faraspatii -> functia afiseaza in fisierul dat ca parametru campul valoare dintr-o structura de tip TEntry fara patii, pentru a respecta identarea ceruta in enunt.
+
+* freeElem -> elibereaza spatiul pentru o structura de tip TEntry
+
+* compK -> realizeaza comparatia dintre un parametru oarecare convertitla TEnry si un sir de caractere pentru a testa daca cheia respectiva exista deja in tabela sau nu.
+
+* alocaTH -> functie de alocare memorie pentru o tabela hash
+Intai alocmemorie pentru structura de tip TH, iar apoi pentru elementele ei: vectorul de liste.Tot in aceasta functie initializez direct functia hash corespunzatoare tabelei cu cea declarata mai sus *avand o singura tabela, nu am crezut ca e necesar sa o mai transmit ca parametru*.
+
+* DistrugeHash -> functie care elibereaza spatiul pentru o tabela hash
+Parcurg intai vectorul de liste cu o vaiabila auxiliara si distrug lista de pe fiecare pozitie folosind functia DistrugeL. Apoi eliberez spatiul pentru vectorul de lsite si pentru auxiliar
+si il si fac NULL pentru siguranta.
+
+*print -> functie care printeaza campul value in toatele celulele tabelei
+Parcurg tot vectorul de liste iar daca lista e nevida, parcurg element cu element. Pentru identare, verific daca lista are un singur element sau daca trebuie sa afisez ultimul element , pentru a nu pune spatiu la final si printez in fisierul dat ca parametru campul value al informatiei, facand cast in prealabil la tipul TEntry. Afltfel, fac afisarea cu spatiu dupa fiecare element.
+
+set -> returneaza 0 pentru inserare nereusita, 1 in caz contrar
+Intai calculez indicele listei din vectorul h->v unde ar trebui inserat elementul. Parcurg lista corespunzatoare, iar daca elementul se gaseste deja in lista returnez  si ies din functie. Altfel, verific ca lista sa aiba mai putin de M elemente, ca sa pot insera. Daca lista are deja M elemente, intai il elimin pe ultimul folosind functia DistrugeCel, apoi inserez. Inserarea o realizez in oricare dintre cazuri luand un pointer de tip TEntry, ale carui campuri key si value le initializez cu valorile date ca parametru, iar frecventa cu . Pe acesta apoi il inserez in lista folosind functia InsL.
+Daca conditia aceasta nu este respectata, calculez suma elementelor din intreaga tabela, pentru a verifica daca trebuie realocata sau nu. In caz negativ, inserez direct. Altfel, aloc o noua tabela de dimensiune 2*M, in care copiez elementele din tabela veche, pe pozitiile corespunzatoare genrate de functia hash. Dupa accea inserez noul element in noua tabela in lista corespunzatoare si fac trecerea de la tabela veche la cea cu 2*M elemente.
+
+* print_list -> verific daca lista este nula, caz in care este afisat mesajul "VIDA". Altfel, parcurg lista si, in functie de pozitia elementului, afisez campul value al informatiei din fiecare celula cu identarea specificata in enunt.
+
+* get -> calculez indicele listei unde ar trebui sa se afle elementul. Parcurg lista corespunzatoare si caut celula a carei informatie ar campul key corespunzator cu parametru functiei get. Cand o gasesc ii incrementez frecventa si salvez intr-un pointer de tip TEntry valorile campurilor celulei respective. Apoi, pentru a pastra lista ordonata, elimin celula din lista si inserez o noua celula cu aceleasi specificatii ca cea care a fost eliminata, dar cu frecventa incrementata si returnez valoarea acesteia. Daca elementul specificat nu se regaseste in lista intorc NULL.
+
+	test_main.c -> 
+Citesc in 2 siruri si o variabila de tip int argumentele din linia de comanda. Deschid fisierele pentru citire si scriere si citesc cat timp exista operatii in fisierul de intrare. Verfic care este operatia citita si in functie de aceasta citesc si restul parametrilor si apelez functia corespunzatoare.
+
+
+punctaj pe checkerul local: 105/85
